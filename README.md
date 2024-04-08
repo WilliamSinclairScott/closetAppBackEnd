@@ -13,10 +13,10 @@ Closet App is a organization tool for a closet space. It consists of a way to up
 
 
 # MVP
-AAU, I am able to browse all my closetSpaces without horrible load times.
-AAU, I am able to search for an item by specific name, or tag's
-AAU, I can add and remove clothing from closetSpaces.
-AAU, I can change the tags or name of my closetItem or Space.
+- AAU, I am able to browse all my closetSpaces without horrible load times.
+- AAU, I am able to search for an item by specific name, or tag's
+- AAU, I can add and remove clothing from closetSpaces.
+- AAU, I can change the tags or name of my closetItem or Space.
 
 # Stretch Goals
 
