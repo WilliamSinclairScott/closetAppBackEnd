@@ -27,3 +27,16 @@ The strech goals will be in order of priority:
 - Add outfits into the equation
 - Polish
 
+# Sprint Week Timeline
+
+| Day        |   | Goals                               | Accomplished notes | Notes/ Thoughts |
+|------------|---|------------------------------------|----------|-----------------|
+|  Weekend   |   |Research different opportunities and tools to assist with goals | Tools to go over monday: Multer Firebase | With scope of project, am I using too many tools, is firebase being BaaS a problem.|
+|    Monday  |   |    Pitch project, finalize database structure, work simple backend, research tools approved in proposal     |          |                 |
+|   Tuesday  |   | MongoDB backend finish, working on backend, plug in to frontend |          |                 |
+| Wednesday  |   | Finish basic concept, work on picture storage with [edit with monday discussion].  |          |                 |
+|  Thusday   |   |  build outfit system, test to make sure it works as intended |          |                 |
+|  Friday    |   |  Work on readme, continue fixing bugs|         |                 |
+|   Saturday |   | Add data using personal items, work on UI|          |                 |
+|    Sunday  |   |    Work on UI, finalize README, |          |                 |
+|    Monday  |   |     Celebrate, present, have fun   |          | I hope          |
