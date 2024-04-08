@@ -1,2 +1,29 @@
 # closetAppBackEnd
 back end to a MEN CRUD web app
+
+Closet App is a organization tool for a closet space. It consists of a way to upload pieces of clothing, consisting of a name, picture and tag's that then can be moved through on a phone.
+
+#Tech used
+- MongoDB
+- Mongoose
+- Express
+#ERD
+
+![Screenshot 2024-04-08 093041](https://github.com/WilliamSinclairScott/closetAppBackEnd/assets/60750816/f6d6f1b9-9ffa-4c52-bb8c-6f497a437aca)
+
+
+# MVP
+- AAU, I am able to browse all my closetSpaces without horrible load times.
+- AAU, I am able to search for an item by specific name, or tag's
+- AAU, I can add and remove clothing from closetSpaces.
+- AAU, I can change the tags or name of my closetItem or Space.
+
+# Stretch Goals
+
+The strech goals will be in order of priority:
+- Add search functionality on the frontend and backend
+- Add picture storage via firebase buckets
+- Add more complex auth
+- Add outfits into the equation
+- Polish
+
