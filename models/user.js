@@ -17,5 +17,9 @@ const userSchema = new mongoose.Schema({
       message: props => 'The specified email address is already in use.'
     },
     required: [true, 'User email required']
-  }
+  },
+  closetSpaces: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ClosetSpace'
+  }]
 })
