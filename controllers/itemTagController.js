@@ -23,6 +23,20 @@ export const getItemTagById = async (req, res) => {
   }
 }
 
+export const getItemTagByName = async (req, res) => {
+  try {
+    const { name } = req.params;
+    const itemTag = await itemTagModel.findOne({ name }).populate('closetItems');
+    if (itemTag) {
+      res.json(itemTag);
+    } else {
+      res.status(404).json({ message: 'ItemTag not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 export const createItemTag = async (req, res) => {
   const { name } = req.body;
   try {
@@ -53,6 +67,8 @@ export const updateItemTag = async (req, res) => {
   }
 }
 
+
+
 export const deleteItemTag = async (req, res) => {
   try {
     const { id } = req.params;
@@ -66,3 +82,4 @@ export const deleteItemTag = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
+
