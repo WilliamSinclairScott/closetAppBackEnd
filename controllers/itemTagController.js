@@ -1,8 +1,8 @@
-import itemTag from '../models/itemTagModel.js';
+import itemTagModel from '../models/itemTagModel.js';
 
 export const getAllItemTags = async (req, res) => {
   try {
-    const itemTags = await itemTag.find().populate('closetItems');
+    const itemTags = await itemTagModel.find().populate('closetItems');
     res.json(itemTags);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -12,7 +12,7 @@ export const getAllItemTags = async (req, res) => {
 export const getItemTagById = async (req, res) => {
   try {
     const { id } = req.params;
-    const itemTag = await itemTag.findById(id).populate('closetItems');
+    const itemTag = await itemTagModel.findById(id).populate('closetItems');
     if (itemTag) {
       res.json(itemTag);
     } else {
@@ -24,19 +24,25 @@ export const getItemTagById = async (req, res) => {
 }
 
 export const createItemTag = async (req, res) => {
-  const ItemTag = new itemTag(req.body);
+  const { name } = req.body;
   try {
-    const newItemTag = await ItemTag.save();
-    res.status(201).json(newItemTag);
+    const existingItemTag = await itemTagModel.findOne({ name });
+    if (existingItemTag) {
+      res.status(400).json({ message: 'ItemTag with the same name already exists' });
+    } else {
+      const newItemTag = new itemTagModel(req.body);
+      const createdItemTag = await newItemTag.save();
+      res.status(201).json(createdItemTag);
+    }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 }
 
 export const updateItemTag = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedItemTag = await itemTag.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedItemTag = await itemTagModel.findByIdAndUpdate(id, req.body, { new: true });
     if (updatedItemTag) {
       res.json(updatedItemTag);
     } else {
@@ -50,7 +56,7 @@ export const updateItemTag = async (req, res) => {
 export const deleteItemTag = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedItemTag = await itemTag.findByIdAndDelete(id);
+    const deletedItemTag = await itemTagModel.findByIdAndDelete(id);
     if (deletedItemTag) {
       res.json({ message: 'ItemTag deleted' });
     } else {

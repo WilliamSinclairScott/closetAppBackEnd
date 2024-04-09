@@ -28,12 +28,19 @@ export const getClosetItem = async (req, res) => {
 
 // Controller function to create a new closet item
 export const createClosetItem = async (req, res) => {
-  const ClosetItem = new closetItem(req.body);
+  const { name } = req.body;
   try {
+    // Check if the item already exists by name
+    const existingItem = await closetItem.findOne({ name });
+    if (existingItem) {
+      return res.status(400).json({ message: 'Item already exists' });
+    }
+    
+    const ClosetItem = new closetItem(req.body);
     const newClosetItem = await ClosetItem.save();
     res.status(201).json(newClosetItem);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 

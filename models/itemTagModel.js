@@ -4,7 +4,8 @@ import closetItem from "./closetItemModel.js";
 const itemTagSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   closetItems: [{
     type: mongoose.Types.ObjectId,
