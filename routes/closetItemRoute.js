@@ -1,7 +1,5 @@
 import Express from "express";
 
-const closetItemRouter = Express.Router();
-
 import {
   getAllClosetItems,
   getClosetItem,
@@ -9,6 +7,8 @@ import {
   updateClosetItem,
   deleteClosetItem
 } from "../controllers/closetItemController.js"
+
+const closetItemRouter = Express.Router();
 
 closetItemRouter.get("/", getAllClosetItems);
 closetItemRouter.get("/:id", getClosetItem);

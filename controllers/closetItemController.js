@@ -1,9 +1,9 @@
 // Import necessary modules or dependencies
-import ClosetItem from '../models/closetItemModel.js';
+import closetItem from '../models/closetItemModel.js';
 // Controller function to get all closet items
 export const getAllClosetItems = async (req, res) => {
   try {
-    const closetItems = await ClosetItem.find();
+    const closetItems = await closetItem.find().populate('closetItem');
     res.json(closetItems);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -14,7 +14,7 @@ export const getAllClosetItems = async (req, res) => {
 export const getClosetItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const closetItem = await ClosetItem.findById(id);
+    const closetItem = await closetItem.findById(id).populate('closetItem');
     if (closetItem) {
       res.json(closetItem);
     } else {
@@ -27,7 +27,7 @@ export const getClosetItem = async (req, res) => {
 
 // Controller function to create a new closet item
 export const createClosetItem = async (req, res) => {
-  const closetItem = new ClosetItem(req.body);
+  const closetItem = new closetItem(req.body);
   try {
     const newClosetItem = await closetItem.save();
     res.status(201).json(newClosetItem);
@@ -54,11 +54,11 @@ export const updateClosetItem = async (req, res) => {
 export const deleteClosetItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const closetItem = await ClosetItem.findByIdAndDelete(id);
+    const closetItem = await closetItem.findByIdAndDelete(id);
     if (closetItem) {
-      res.json({ message: 'ClosetItem deleted successfully' });
+      res.json({ message: 'closetItem deleted successfully' });
     } else {
-      res.status(404).json({ message: 'ClosetItem not found' });
+      res.status(404).json({ message: 'closetItem not found' });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

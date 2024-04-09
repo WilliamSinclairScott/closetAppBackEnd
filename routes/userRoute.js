@@ -1,7 +1,5 @@
 import Express from "express";
 
-const userRouter = Express.Router();
-
 import {
   getAllusers,
   getuser,
@@ -9,6 +7,8 @@ import {
   updateuser,
   deleteuser
 } from "../controllers/userController.js"
+
+const userRouter = Express.Router();
 
 userRouter.get("/", getAllusers);
 userRouter.get("/:id", getuser);

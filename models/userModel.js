@@ -18,8 +18,10 @@ const userSchema = new mongoose.Schema({
     },
     required: [true, 'User email required']
   },
-  closetSpaces: [{
+  closetItems: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'ClosetSpace'
+    ref: 'closetItem'
   }]
 })
+
+export default userSchema;
