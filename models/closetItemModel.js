@@ -1,17 +1,30 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
+import itemTag from "./itemTagModel.js";
 
 const closetItemSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
-  itemsTags: [{
-    type: Schema.Types.ObjectId,
-    ref: 'itemTag'
+  itemTags: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'itemTag',
+    strictPopulate: false
   }],
   picture: {
     type: String,
     required: true
+  }
+});
+
+closetItemSchema.pre('save', async function(next) {
+  try {
+    // Ensure all itemTags are up to date
+    const itemTags = await itemTag.find({ _id: { $in: this.closetItems } }).select('_id');
+    this.closetItems = itemTags.map(tag => tag._id);
+    next();
+  } catch (error) {
+    next(error);
   }
 });
 

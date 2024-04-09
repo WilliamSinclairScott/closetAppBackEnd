@@ -1,8 +1,8 @@
-import itemTag from '../models/itemTag.js';
+import itemTag from '../models/itemTagModel.js';
 
 export const getAllItemTags = async (req, res) => {
   try {
-    const itemTags = await itemTag.find().populate('closetItem');
+    const itemTags = await itemTag.find().populate('closetItems');
     res.json(itemTags);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -12,7 +12,7 @@ export const getAllItemTags = async (req, res) => {
 export const getItemTagById = async (req, res) => {
   try {
     const { id } = req.params;
-    const itemTag = await itemTag.findById(id).populate('closetItem');
+    const itemTag = await itemTag.findById(id).populate('closetItems');
     if (itemTag) {
       res.json(itemTag);
     } else {
@@ -24,9 +24,9 @@ export const getItemTagById = async (req, res) => {
 }
 
 export const createItemTag = async (req, res) => {
-  const itemTag = new itemTag(req.body);
+  const ItemTag = new itemTag(req.body);
   try {
-    const newItemTag = await itemTag.save();
+    const newItemTag = await ItemTag.save();
     res.status(201).json(newItemTag);
   } catch (error) {
     res.status(400).json({ message: error.message });

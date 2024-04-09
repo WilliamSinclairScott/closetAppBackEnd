@@ -5,11 +5,11 @@ import mongoose from "mongoose"
 //Route imports
 import closetItemRouter from "./routes/closetItemRoute.js"
 import itemTagRouter from "./routes/itemTagRoute.js"
-import userRouter from "./routes/userRoute.js"
+//import userRouter from "./routes/userRoute.js"
 
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 7777
 
 mongoose.connect(process.env.DATABASE_URL)
 .then(() => {
@@ -26,7 +26,7 @@ app.use(express.json())
 //Use Rotes
 app.use('/closetItem', closetItemRouter)
 app.use('/itemTag', itemTagRouter)
-app.use('/user', userRouter)
+//app.use('/user', userRouter)
 
 
 app.listen(PORT, () => {

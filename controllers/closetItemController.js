@@ -3,7 +3,8 @@ import closetItem from '../models/closetItemModel.js';
 // Controller function to get all closet items
 export const getAllClosetItems = async (req, res) => {
   try {
-    const closetItems = await closetItem.find().populate('closetItem');
+
+    const closetItems = await closetItem.find().populate('itemTags');
     res.json(closetItems);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -14,7 +15,7 @@ export const getAllClosetItems = async (req, res) => {
 export const getClosetItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const closetItem = await closetItem.findById(id).populate('closetItem');
+    const closetItem = await closetItem.findById(id).populate('itemTags');
     if (closetItem) {
       res.json(closetItem);
     } else {
@@ -27,9 +28,9 @@ export const getClosetItem = async (req, res) => {
 
 // Controller function to create a new closet item
 export const createClosetItem = async (req, res) => {
-  const closetItem = new closetItem(req.body);
+  const ClosetItem = new closetItem(req.body);
   try {
-    const newClosetItem = await closetItem.save();
+    const newClosetItem = await ClosetItem.save();
     res.status(201).json(newClosetItem);
   } catch (error) {
     res.status(400).json({ message: error.message });
