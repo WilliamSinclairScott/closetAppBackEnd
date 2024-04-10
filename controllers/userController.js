@@ -23,6 +23,21 @@ export const getuser = async (req, res) => {
   }
 }
 
+export const getUserByUserID = async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const user = await userModel.findOne({ userID }).populate('closetItems');
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+}
+
 export const createUser = async (req, res) => {
   const { name } = req.body;
   try {
