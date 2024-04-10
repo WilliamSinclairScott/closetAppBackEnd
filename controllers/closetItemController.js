@@ -11,6 +11,8 @@ export const getAllClosetItems = async (req, res) => {
   }
 };
 
+
+
 // Controller function to get a single closet item
 export const getClosetItem = async (req, res) => {
   try {
