@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     required : true,
   },
   closetItems: [{
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'closetItem',
     strictPopulate: false
   }]

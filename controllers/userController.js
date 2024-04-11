@@ -9,24 +9,12 @@ export const getAllusers = async (req, res) => {
   }
 }
 
-export const getuser = async (req, res) => {
-  try {
-    const { id } = req.params
-    const user = await userModel.findById(id).populate('closetItems')
-    if (user) {
-      res.json(user)
-    } else {
-      res.status(404).json({ message: 'user not found' })
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
-}
-
 export const getUserByUserID = async (req, res) => {
   try {
     const { userID } = req.params;
-    const user = await userModel.findOne({ userID }).populate('closetItems');
+    console.log(typeof userID)
+    const user = await userModel.findOne( { userID: userID } ).populate('closetItems');
+    console.log(user)
     if (user) {
       res.json(user);
     } else {
@@ -54,28 +42,17 @@ export const createUser = async (req, res) => {
   }
 }
 
-export const updateUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedUser = await userModel.findByIdAndUpdate(id, req.body, { new: true });
-    if (updatedUser) {
-      res.json(updatedUser);
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
 export const updateUserByUserID = async (req, res) => {
   try {
     const { userID } = req.params;
+    const closetItems = req.body.closetItems
+    console.log(closetItems)
     const updatedUser = await userModel.findOneAndUpdate(
       { userID: userID },
-      { $addToSet: { closetItems: req.body.closetItems } },
-      { new: true }
+      { $addToSet: { closetItems: closetItems} },
+      { new: true, runValidators: true }
       ).populate('closetItems')
-
+      console.log(updatedUser)
     if (updatedUser) {
       res.json(updatedUser);
     } else {

@@ -7,7 +7,7 @@ import cors from "cors"
 import closetItemRouter from "./routes/closetItemRoute.js"
 import itemTagRouter from "./routes/itemTagRoute.js"
 import userRouter from "./routes/userRoute.js"
-
+import morgan from 'morgan'
 
 const app = express()
 const PORT = process.env.PORT || 7777
@@ -24,6 +24,7 @@ mongoose.connect(process.env.DATABASE_URL)
 //middleware
 app.use(express.json())
 app.use(cors())
+app.use(morgan('dev'))
 
 //Use Rotes
 app.use('/closetItem', closetItemRouter)
