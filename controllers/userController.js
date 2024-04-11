@@ -70,7 +70,12 @@ export const updateUser = async (req, res) => {
 export const updateUserByUserID = async (req, res) => {
   try {
     const { userID } = req.params;
-    const updatedUser = await userModel.findOneAndUpdate({ userID })
+    const updatedUser = await userModel.findOneAndUpdate(
+      { name: userID },
+      { $addToSet: { closetItems: req.body.closetItems } },
+      { new: true }
+      ).populate('closetItems')
+      
     if (updatedUser) {
       res.json(updatedUser);
     } else {
