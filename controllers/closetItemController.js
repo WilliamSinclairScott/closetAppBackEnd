@@ -16,8 +16,8 @@ export const getAllClosetItems = async (req, res) => {
 // Controller function to get a single closet item
 export const getClosetItem = async (req, res) => {
   try {
-    const { id } = req.params;
-    const closetItem = await closetItem.findById(id).populate('itemTags');
+    const { name } = req.params;
+    const closetItem = await closetItem.findOne({ name }).populate('itemTags');
     if (closetItem) {
       res.json(closetItem);
     } else {
