@@ -16,7 +16,7 @@ itemTagRouter.get('/', getAllItemTags);
 itemTagRouter.get('/:id', getItemTagById);
 itemTagRouter.get('/name/:name', getItemTagByName);
 itemTagRouter.post('/', createItemTag);
-itemTagRouter.put('/:id', updateItemTag);
+itemTagRouter.patch('/:id', updateItemTag);
 itemTagRouter.delete('/:id', deleteItemTag);
 
 export default itemTagRouter;

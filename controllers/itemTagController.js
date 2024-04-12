@@ -56,7 +56,12 @@ export const createItemTag = async (req, res) => {
 export const updateItemTag = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedItemTag = await itemTagModel.findByIdAndUpdate(id, req.body, { new: true });
+    const { closetItems } = req.body;
+    const updatedItemTag = await itemTagModel.findByIdAndUpdate(
+      id,
+      { $addToSet: { closetItems: closetItems} },
+      { new: true, runValidators: true }
+      ).populate('closetItems')
     if (updatedItemTag) {
       res.json(updatedItemTag);
     } else {
