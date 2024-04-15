@@ -29,7 +29,7 @@ export const getUserByUserID = async (req, res) => {
 export const createUser = async (req, res) => {
   const { name } = req.body;
   try {
-    const existingUser = await userModel.findOne({ name });
+    //const existingUser = await userModel.findOne({ name });
     if (existingUser) {
       res.status(400).json({ message: 'User with the same name already exists' });
     } else {
