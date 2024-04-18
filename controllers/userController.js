@@ -1,20 +1,20 @@
 import userModel from '../models/userModel.js'
 
-export const getAllusers = async (req, res) => {
+//Do not implement this function, for testing purposes only
+export const getAllUsers = async (req, res) => {
   try {
-    const users = await userModel.find().populate('closetItems')
-    res.json(users)
+    const users = await userModel.find().populate('closetItems');
+    res.json(users);
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ message: error.message });
   }
+
 }
 
-export const getUserByUserID = async (req, res) => {
+export const getUser = async (req, res) => {
   try {
-    const { userID } = req.params;
-    console.log(typeof userID)
-    const user = await userModel.findOne( { userID: userID } ).populate('closetItems');
-    console.log(user)
+    const { id } = req.params;
+    const user = await userModel.findById(id).populate('closetItems');
     if (user) {
       res.json(user);
     } else {
@@ -23,35 +23,37 @@ export const getUserByUserID = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-
 }
 
+//new user creation, no need to populate closetItems or associatedTags
 export const createUser = async (req, res) => {
-  const { name } = req.body;
   try {
-    //const existingUser = await userModel.findOne({ name });
-    if (existingUser) {
-      res.status(400).json({ message: 'User with the same name already exists' });
-    } else {
-      const newUser = new userModel(req.body);
-      const createdUser = await newUser.save();
-      res.status(201).json(createdUser);
-    }
+    const newUser = new userModel(req.body);
+    const createdUser = await newUser.save();
+    res.status(201).json(createdUser);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
 
-export const updateUserByUserID = async (req, res) => {
+//TODO: make sure that associatedTags get updated when new closetItem is added.
+export const updateUser = async (req, res) => {
   try {
-    const { userID } = req.params;
+    const { _id } = req.params;
     const closetItems = req.body.closetItems
     console.log(closetItems)
+    const closetItemTags = req.body.closetItemTags
     const updatedUser = await userModel.findOneAndUpdate(
-      { userID: userID },
+      //find user by id
+      { _id: _id },
+      //add to set to avoid duplicates
       { $addToSet: { closetItems: closetItems} },
+      //add to set to avoid duplicates
+      { $addToSet: { associatedTags: closetItemTags}},
       { new: true, runValidators: true }
       ).populate('closetItems')
+      //!!this might be wrong, check if it works
+      .populate('associatedTags')
       console.log(updatedUser)
     if (updatedUser) {
       res.json(updatedUser);
@@ -63,7 +65,7 @@ export const updateUserByUserID = async (req, res) => {
   }
 }
 
-
+//TODO: remove all closetItems that were made by the user.
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;

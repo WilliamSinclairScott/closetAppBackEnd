@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 import itemTag from "./itemTagModel.js";
 
 const closetItemSchema = new mongoose.Schema({
+  madeby: {
+    type: mongoose.Types.ObjectId,
+    ref: 'user',
+    required: true
+  },
   name: {
     type: String,
     required: true

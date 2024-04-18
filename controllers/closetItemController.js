@@ -1,6 +1,7 @@
 // Import necessary modules or dependencies
 import closetItem from '../models/closetItemModel.js';
 // Controller function to get all closet items
+//FOR BUG FIXING ONLY
 export const getAllClosetItems = async (req, res) => {
   try {
 
@@ -10,8 +11,6 @@ export const getAllClosetItems = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
 
 // Controller function to get a single closet item
 export const getClosetItem = async (req, res) => {
@@ -29,6 +28,7 @@ export const getClosetItem = async (req, res) => {
 };
 
 // Controller function to create a new closet item
+//TODO: Make Ref foreach itemTag to the closetItem
 export const createClosetItem = async (req, res) => {
   const { name } = req.body;
   try {
@@ -47,6 +47,8 @@ export const createClosetItem = async (req, res) => {
 };
 
 // Controller function to update a closet item
+//TODO: Make Ref foreach itemTag added to the closetItem
+//TODO: Remove each Ref foreach itemTag removed from the closetItem
 export const updateClosetItem = async (req, res) => {
   try{
     const closetItem = await closetItem.findByIdAndUpdate(req.params.id, req.body, { new: true})
@@ -61,6 +63,7 @@ export const updateClosetItem = async (req, res) => {
 };
 
 // Controller function to delete a closet item
+//TODO: Remove each Ref foreach itemTag removed from the closetItem
 export const deleteClosetItem = async (req, res) => {
   try {
     const { id } = req.params;

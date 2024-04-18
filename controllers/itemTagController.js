@@ -37,6 +37,8 @@ export const getItemTagByName = async (req, res) => {
   }
 }
 
+
+//TODO: If it exsists, add the itemTag to the user's associatedTags if it isn't there already
 export const createItemTag = async (req, res) => {
   const { name } = req.body;
   try {
@@ -53,6 +55,7 @@ export const createItemTag = async (req, res) => {
   }
 }
 
+//!!: This should never be done as a user, but as an admin 
 export const updateItemTag = async (req, res) => {
   try {
     const { id } = req.params;
@@ -73,7 +76,7 @@ export const updateItemTag = async (req, res) => {
 }
 
 
-
+//TODO: If an admin, delete the itemTag from all users associatedTags, if user, remove it from associatedTags
 export const deleteItemTag = async (req, res) => {
   try {
     const { id } = req.params;
