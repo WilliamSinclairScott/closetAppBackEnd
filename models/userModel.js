@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
+import bycrypt from "bcrypt";
 import closetItem from "./closetItemModel.js";
+
+const SALT_WORK_FACTOR = 10;
 
 
 const userSchema = new mongoose.Schema({
