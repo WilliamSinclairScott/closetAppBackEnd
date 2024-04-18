@@ -9,7 +9,7 @@ Closet App is a organization tool for a closet space. It consists of a way to up
 - Express
 #ERD
 
-![Screenshot 2024-04-08 093041](https://github.com/WilliamSinclairScott/closetAppBackEnd/assets/60750816/f6d6f1b9-9ffa-4c52-bb8c-6f497a437aca)
+![ERD](https://github.com/WilliamSinclairScott/closetAppBackEnd/assets/60750816/eb4e835c-bbb5-4d30-9068-36c1757443e6)
 
 
 # MVP
