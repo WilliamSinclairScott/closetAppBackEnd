@@ -2,8 +2,7 @@ import Express from "express";
 
 import {
   getAllItemTags,
-  getItemTagById,
-  getItemTagByName,
+  getItemTag,
   createItemTag,
   updateItemTag,
   deleteItemTag
@@ -14,8 +13,7 @@ const itemTagRouter = Express.Router();
 
 // Define your routes here
 itemTagRouter.get('/', getAllItemTags);
-itemTagRouter.get('/:id', getItemTagById);
-itemTagRouter.get('/name/:name', getItemTagByName);
+itemTagRouter.get('/:id', getItemTag);
 itemTagRouter.post('/', isUserLoggedIn, createItemTag);
 itemTagRouter.patch('/:id', isUserLoggedIn, updateItemTag);
 itemTagRouter.delete('/:id', isUserLoggedIn, deleteItemTag);

@@ -1,5 +1,7 @@
 // Import necessary modules or dependencies
 import closetItem from '../models/closetItemModel.js';
+import user from '../models/userModel.js';
+import itemTag from '../models/itemTagModel.js';
 // Controller function to get all closet items
 //FOR BUG FIXING ONLY
 export const getAllClosetItems = async (req, res) => {
@@ -40,6 +42,25 @@ export const createClosetItem = async (req, res) => {
     
     const ClosetItem = new closetItem(req.body);
     const newClosetItem = await ClosetItem.save();
+
+    //update each itemTag and user
+    try {
+      const itemTags = req.body.itemTags;
+      for (const tagId of itemTags) {
+
+        //update each itemTag with the closetItem
+        await itemTag.findByIdAndUpdate(tagId, { $addToSet: { closetItems: newClosetItem._id } });
+        
+        //update the users associatedTags with the itemTags
+        await user.findByIdAndUpdate(newClosetItem.madeby, { $addToSet: { associatedTags: tagId } });
+      }
+
+    //and add the new closet item to that user
+    await user.findByIdAndUpdate(newClosetItem.madeby, { $addToSet: { closetItems: newClosetItem._id } });
+
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
     res.status(201).json(newClosetItem);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -9,7 +9,7 @@ export const getAllItemTags = async (req, res) => {
   }
 }
 
-export const getItemTagById = async (req, res) => {
+export const getItemTag = async (req, res) => {
   try {
     const { id } = req.params;
     const itemTag = await itemTagModel.findById(id).populate('closetItems');
@@ -46,7 +46,7 @@ export const createItemTag = async (req, res) => {
     if (existingItemTag) {
       res.status(400).json({ message: 'ItemTag with the same name already exists' });
       //: Add the itemTag to the user's associatedTags if it isn't there already
-      
+
     } else {
       const newItemTag = new itemTagModel(req.body);
       const createdItemTag = await newItemTag.save();
