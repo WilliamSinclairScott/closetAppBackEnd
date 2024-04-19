@@ -15,13 +15,16 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.body.username });
+        const user = await User.findOne({ name: req.body.name });
         if (user) {
+
+
             const result = await bcrypt.compare(req.body.password, user.password);
+    
             if (result) {
-                const payload = { username: user.username };
+                const payload = { name: user.name };
                 const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '1d' }); // Example: Expiring in 1 day
-                res.cookie('token', token, { httpOnly: true }).json({ message: 'Login successful' });
+                res.cookie('token', token, { httpOnly: false }).json({ user: user });
             } else {
                 res.status(400).json({ error: 'Password does not match' });
             }

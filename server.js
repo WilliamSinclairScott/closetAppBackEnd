@@ -25,7 +25,11 @@ mongoose.connect(process.env.DATABASE_URL)
 
 //middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  credentials: true,
+  //!!: this needs to be different in production
+  origin: "http://localhost:5173"
+}))
 app.use(morgan('dev'))
 app.use(cookieParser())
 
