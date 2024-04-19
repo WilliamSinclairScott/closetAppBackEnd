@@ -1,10 +1,7 @@
 // Using ES module import statements
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/User.js'; // Adjust the path as per your structure and make sure to add .js extension
-import dotenv from 'dotenv';
-'dotenv/config.js'
-
+import User from '../models/userModel.js';
 
 export const signup = async (req, res) => {
     try {
@@ -12,7 +9,7 @@ export const signup = async (req, res) => {
         const user = await User.create(req.body);
         res.json(user);
     } catch (error) {
-        res.status(500).json({ error: 'Error creating user' });
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -32,7 +29,7 @@ export const login = async (req, res) => {
             res.status(400).json({ error: 'User not found' });
         }
     } catch (error) {
-        res.status(500).json({ error: 'Error logging in' });
+        res.status(500).json({ error: error.message });
     }
 };
 

@@ -5,6 +5,7 @@ import mongoose from "mongoose"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 //Route imports
+import authRouter from "./routes/authRoute.js"
 import closetItemRouter from "./routes/closetItemRoute.js"
 import itemTagRouter from "./routes/itemTagRoute.js"
 import userRouter from "./routes/userRoute.js"
@@ -32,6 +33,7 @@ app.use(cookieParser())
 app.use('/closetItem', closetItemRouter)
 app.use('/itemTag', itemTagRouter)
 app.use('/user', userRouter)
+app.use('/auth', authRouter)
 
 
 app.listen(PORT, () => {
