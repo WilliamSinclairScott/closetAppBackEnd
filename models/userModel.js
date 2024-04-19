@@ -2,13 +2,15 @@ import mongoose from "mongoose";
 import bycrypt from "bcrypt";
 import closetItem from "./closetItemModel.js";
 
-const SALT_WORK_FACTOR = 10;
-
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, 'Username is required'],
+    unique: true,
+    minlength: [5, 'Username must include a minimum of 6 characters'],
+    maxlength: [30, 'Usename must contain a maximum of 30 characters'],
+    match: [/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'],
   },
   password:{
     type: String,
@@ -34,11 +36,26 @@ userSchema.pre('save', async function(next) {
 
     const associatedTags = await itemTag.find({ _id: { $in: this.associatedTags } }).select('_id');
     this.associatedTags = associatedTags.map(tag => tag._id);
+
+    //Ensure password meets req
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (this.isModified('password')) {
+    if (!regex.test(this.password)) {
+      next(new Error('Password must be at least 8 characters long, and have at least one upper case letter, lower case letter, number, and symbol'))
+    }
+    try {
+      this.password = await bcrypt.hash(this.password, 8)
+      next();
+    } catch (error) {
+      next(error)
+    }
+  }
     next();
-  } catch (error) {
+  }catch (error) {
     next(error);
   }
-});
+})
 
 const UserSchema = mongoose.model('user', userSchema);
 

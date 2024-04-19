@@ -8,6 +8,7 @@ import {
   updateItemTag,
   deleteItemTag
 } from "../controllers/itemTagController.js"
+import { isUserLoggedIn } from "../utils/auth.js"
 
 const itemTagRouter = Express.Router();
 
@@ -15,8 +16,8 @@ const itemTagRouter = Express.Router();
 itemTagRouter.get('/', getAllItemTags);
 itemTagRouter.get('/:id', getItemTagById);
 itemTagRouter.get('/name/:name', getItemTagByName);
-itemTagRouter.post('/', createItemTag);
-itemTagRouter.patch('/:id', updateItemTag);
-itemTagRouter.delete('/:id', deleteItemTag);
+itemTagRouter.post('/', isUserLoggedIn, createItemTag);
+itemTagRouter.patch('/:id', isUserLoggedIn, updateItemTag);
+itemTagRouter.delete('/:id', isUserLoggedIn, deleteItemTag);
 
 export default itemTagRouter;
