@@ -3,7 +3,7 @@ import userModel from '../models/userModel.js'
 //Do not implement this function, for testing purposes only
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await userModel.find().populate('closetItems');
+    const users = await userModel.find().populate('closetItems').populate('associatedTags');
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -15,7 +15,7 @@ export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     console.log(id)
-    const user = await userModel.findById(id).populate('closetItems');
+    const user = await userModel.findById(id).populate('closetItems').populate('associatedTags');
     if (user) {
       res.json(user);
     } else {
@@ -41,21 +41,20 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { _id } = req.params;
-    const closetItems = req.body.closetItems
-    console.log(closetItems)
-    const closetItemTags = req.body.closetItemTags
+    let { closetItems, associatedTags } = req.body;
+    closetItems ? closetItems : [];
+    associatedTags ? associatedTags : [];
     const updatedUser = await userModel.findOneAndUpdate(
-      //find user by id
       { _id: _id },
-      //add to set to avoid duplicates
-      { $addToSet: { closetItems: closetItems} },
-      //add to set to avoid duplicates
-      { $addToSet: { associatedTags: closetItemTags}},
+      {
+        $addToSet: {
+          closetItems: closetItems,
+          associatedTags: associatedTags
+        }
+      },
       { new: true, runValidators: true }
-      ).populate('closetItems')
-      //!!this might be wrong, check if it works
-      .populate('associatedTags')
-      console.log(updatedUser)
+    ).populate('closetItems').populate('associatedTags');
+
     if (updatedUser) {
       res.json(updatedUser);
     } else {
@@ -65,6 +64,8 @@ export const updateUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
+
+
 
 //TODO: remove all closetItems that were made by the user.
 export const deleteUser = async (req, res) => {

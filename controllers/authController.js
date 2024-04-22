@@ -15,7 +15,7 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const user = await User.findOne({ name: req.body.name });
+        const user = await User.findOne({ name: req.body.name }).populate('closetItems').populate('associatedTags');
         if (user) {
             const result = await bcrypt.compare(req.body.password, user.password);
     
@@ -30,7 +30,7 @@ export const login = async (req, res) => {
             res.status(400).json({ error: 'User not found' });
         }
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message })
     }
 };
 

@@ -46,7 +46,7 @@ export const createItemTag = async (req, res) => {
     if (existingItemTag) {
       res.status(400).json({ message: 'ItemTag with the same name already exists' });
       //: Add the itemTag to the user's associatedTags if it isn't there already
-
+      res.status(200).json(existingItemTag);
     } else {
       const newItemTag = new itemTagModel(req.body);
       const createdItemTag = await newItemTag.save();
