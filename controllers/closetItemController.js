@@ -17,13 +17,9 @@ export const getAllClosetItems = async (req, res) => {
 // Controller function to get a single closet item
 export const getClosetItem = async (req, res) => {
   try {
-    const { name } = req.params;
-    const closetItem = await closetItem.findOne({ name }).populate('itemTags');
-    if (closetItem) {
-      res.json(closetItem);
-    } else {
-      res.status(404).json({ message: 'ClosetItem not found' });
-    }
+    const { id } = req.params;
+    const foundItem = await closetItem.findById(id).populate('itemTags');
+    res.json(foundItem);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -32,10 +28,10 @@ export const getClosetItem = async (req, res) => {
 // Controller function to create a new closet item
 //TODO: Make Ref foreach itemTag to the closetItem
 export const createClosetItem = async (req, res) => {
-  const { name } = req.body;
+  const { id } = req.body;
   try {
-    // Check if the item already exists by name
-    const existingItem = await closetItem.findOne({ name });
+    // Check if the item already exists by id
+    const existingItem = await closetItem.findById({ id });
     if (existingItem) {
       return res.status(400).json({ message: 'Item already exists' });
     }

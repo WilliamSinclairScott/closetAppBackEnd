@@ -13,7 +13,10 @@ import morgan from 'morgan'
 
 const app = express()
 const PORT = process.env.PORT || 7777
-
+const corsOptions = { 
+  origin: [['http://localhost:5173', 'http://127.0.0.1:5173']], 
+  credentials: true
+}
 mongoose.connect(process.env.DATABASE_URL)
 .then(() => {
   console.log("Connected to MongoDB")
@@ -25,11 +28,7 @@ mongoose.connect(process.env.DATABASE_URL)
 
 //middleware
 app.use(express.json())
-app.use(cors({
-  credentials: true,
-  //!!: this needs to be different in production
-  origin: "http://localhost:5173"
-}))
+app.use(cors(corsOptions))
 app.use(morgan('dev'))
 app.use(cookieParser())
 

@@ -14,6 +14,7 @@ export const getAllUsers = async (req, res) => {
 export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id)
     const user = await userModel.findById(id).populate('closetItems');
     if (user) {
       res.json(user);
